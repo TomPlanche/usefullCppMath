@@ -26,7 +26,7 @@
 int main(void) {
     // . Variable declarations
     Matrix M1(3);
-    vector<vector<double>> matrice1;
+    vector<vector<double> > matrice1;
 
     // . Variables Definition
 
@@ -58,6 +58,12 @@ int main(void) {
     M1.changeMatrix(matrice1);
 
     M1.show();
+
+
+    Fraction f1 = {1,5};
+
+    cout << f1 << endl;
+    cout << M1 << endl;
 
 
 

@@ -11,6 +11,134 @@
 // ! IMPORT OF THE NECESSARY LIBRARIES.
 #include "maths.h"
 
+
+//.  ===============================================================================================
+//.                                           FRACTIONS                                             
+//.  ===============================================================================================
+Fraction Fraction::operator+ (const Fraction frac) {
+    Fraction fractionResultat;
+
+    if (denominator == frac.denominator) {
+        fractionResultat.numerator = numerator + frac.numerator;
+        fractionResultat.denominator = denominator;
+    } else {
+        fractionResultat.numerator = numerator * frac.denominator + frac.numerator * denominator;
+        fractionResultat.denominator = denominator * frac.denominator;
+    }
+
+    return fractionResultat.simplify();
+}
+
+Fraction Fraction::operator+ (const int n) {
+    Fraction fractionResultat;
+
+    fractionResultat.numerator += denominator * (numerator >= denominator ? n + 1 : n);
+    fractionResultat.denominator = denominator;
+
+    return fractionResultat.simplify();
+}
+
+Fraction Fraction::operator- (const Fraction frac) {
+    Fraction fractionResultat;
+
+    if (denominator == frac.denominator) {
+        fractionResultat.numerator = numerator - frac.numerator;
+        fractionResultat.denominator = denominator;
+    } else {
+        fractionResultat.numerator = numerator * frac.denominator - frac.numerator * denominator;
+        fractionResultat.denominator = denominator + frac.denominator;
+    }
+
+    return fractionResultat.simplify();
+}
+
+Fraction Fraction::operator- (const int n) {
+    Fraction fractionResultat;
+
+    
+    fractionResultat.numerator = numerator - (denominator * (numerator >= denominator ? n : n + 1));
+    fractionResultat.denominator = denominator ;
+    
+
+    return fractionResultat.simplify();
+}
+
+Fraction Fraction::operator* (const Fraction frac) {
+    Fraction fractionResultat;
+
+    fractionResultat.numerator = numerator * frac.numerator;
+    fractionResultat.denominator = denominator * frac.denominator;
+
+    return fractionResultat.simplify();
+}
+
+Fraction Fraction::operator* (const int n) {
+    Fraction fractionResultat;
+
+    fractionResultat.numerator = numerator * n;
+    fractionResultat.denominator = denominator;
+
+    return fractionResultat.simplify();
+}
+
+Fraction Fraction::operator/ (const Fraction frac) {
+    Fraction fractionBase = {numerator, denominator};
+    Fraction fractionBase2 = {frac.denominator, frac.numerator};
+    
+
+    return fractionBase * fractionBase2;
+}
+
+ostream& operator<<(std::ostream& out, const Fraction& frac) {
+    if (frac.denominator == frac.numerator) {
+        cout << 1;
+    } else if (frac.denominator == 1) {
+        cout << frac.numerator;
+    } else if (frac.numerator == 0) {
+        cout << 0;
+    } else {
+        cout << frac.numerator << "/" << frac.denominator;
+    }
+
+    return out;
+}
+
+bool Fraction::operator< (const Fraction frac) {
+    if (frac.denominator == denominator) {
+        return (numerator < frac.numerator);
+    }
+
+    return ((frac.numerator*denominator) < (numerator*frac.denominator));
+}
+
+bool Fraction::operator> (const Fraction frac) {
+    if (frac.denominator == denominator) {
+        return (numerator > frac.numerator);
+    }
+
+    return ((frac.numerator*denominator) > (numerator*frac.denominator));
+}
+
+bool Fraction::operator= (Fraction frac) {
+    if (frac.denominator == denominator) {
+        return (numerator = frac.numerator);
+    }
+
+    return (frac.numerator*denominator == numerator*frac.denominator);
+}
+
+Fraction Fraction::simplify() {
+    Fraction fractionSimplifiee;
+    
+    int gcdFrac = gcd(numerator, denominator);
+
+    fractionSimplifiee.numerator = numerator / gcdFrac;
+    fractionSimplifiee.denominator = denominator / gcdFrac;
+
+    return fractionSimplifiee;
+}
+
+
 //.  ===============================================================================================
 //.                                           MATRICES                                              
 //.  ===============================================================================================
@@ -34,6 +162,48 @@ Matrix::Matrix(const int i) {
     n = i;
     m = n;
 }
+
+
+// ostream& operator<<(ostream& os, const Matrix& Matrix_) {
+//     vector<vector<double> > matrix;
+//     vector<double> maxValuesByColums;
+    
+//     matrix = Matrix_.matrix;
+
+//     for (int j{}; j < matrix[0].size(); j++) {
+//         double collumnMax{};
+        
+//         for (int i = 0; i < matrix.size() ; i++) {
+//             if (getSize(matrix[i][j]) > collumnMax) {
+//                 collumnMax = getSize(matrix[i][j]);
+//             }
+//         }
+//         maxValuesByColums.push_back(collumnMax);
+//     }
+
+//     for (int i{}; i < matrix.size(); i++) {
+//         cout << '|';
+        
+//         for (int j{}; j < matrix[0].size(); j++) {
+//             if (j == 0) {
+//                 cout << " ";
+//             }
+            
+//             for (
+//                 int s{};
+//                 s < (maxValuesByColums[j] - getSize(matrix[i][j]));
+//                 s++
+//                 ) {
+//                 cout << " ";
+//             }
+            
+//             cout << matrix[i][j] << " ";
+//         }
+
+//         cout << '|' << endl;
+//     }
+//     return os;
+// }
 
 
 /**\
@@ -86,7 +256,7 @@ void Matrix::show() {
   * 
   * @param matrixArgument Matrix.
 \**/
-void Matrix::changeMatrix(vector<vector<double>> matrixArgument) {
+void Matrix::changeMatrix(vector<vector<double> > matrixArgument) {
     matrix = matrixArgument;
     n = matrix.size();
     m = matrix[0].size();
@@ -116,9 +286,9 @@ int Matrix::get_m(void) {
 /**\
   * @brief Return the matrix.
   * 
-  * @return vector<vector<double>> the matrix.
+  * @return vector<vector<double> > the matrix.
 \**/
-vector<vector<double>> Matrix::get_matrix() { return matrix; }
+vector<vector<double> > Matrix::get_matrix() { return matrix; }
 
 //.  ===============================================================================================
 //.                                            NUMBERS                                              
@@ -150,6 +320,26 @@ int getSize(double number) {
 \**/
 bool isInteger(double number) {
     return !(double(number - (int)number) > 0);
+}
+
+
+/**\
+  * @brief Returns the gcd of two numbers.
+  * 
+  * @param nb1 Number 1.
+  * @param nb2 Number 2.
+  * @return int Gcd of Number 1 and Number 2.
+\**/
+int gcd(const int nb1, const int nb2) {
+    int min = (nb1 < nb2) ? nb1 : nb2;
+
+    for (int i = min; i <= min; i--) {
+        if ((nb1 % i == 0) && (nb2 % i == 0)) {
+            return i;
+        }
+    }
+
+    return 1;
 }
 
 
