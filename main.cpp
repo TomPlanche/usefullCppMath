@@ -24,18 +24,15 @@
 //.  ===============================================================================================
 
 int main(void) {
-    // // . Variable declarations
-    // double a = 4;
-    // double b = 4.5542234;
-    // double c = 4.00;
-    // double d = -452;
+    // . Variable declarations
+    Matrix M1(3);
+    vector<vector<double>> matrice1;
 
-
-    // // . Variables Definition
+    // . Variables Definition
 
 
 
-    // // . Treatments
+    // . Treatments
     // cout << isInteger(a) << endl;
     // cout << isInteger(b) << endl;
     // cout << isInteger(c) << endl;
@@ -52,11 +49,9 @@ int main(void) {
     // cout << c << "--" << getSize(c) << endl;
     // cout << d << "--" << getSize(d) << endl;
 
-    Matrix M1(3);
-
-    vector<vector<double>> matrice1 = {
+    matrice1 = {
         {1, 2, 3},
-        {4, -54.234, 6},
+        {4, -54, 6},
         {7, 84, 9}
     };
 
