@@ -49,44 +49,114 @@ double roundTo(double val, int n);
 //.  ===============================================================================================
 //.                                           FRACTION                                              
 //.  ===============================================================================================
-struct Fraction {
-	int numerator;
-	int denominator;
+class Fraction {
+    public:
 
     // ! ---------------------------------------------------- FONCTIONS ----------------------------------------------------
+    /**\
+      * @brief Simplify a fraction.
+      * 
+      * @return Fraction The simplified fraction.
+    \**/
     Fraction simplify();
+
+
+    /**\
+      * @brief Construct a new Fraction object with parameters.
+      * 
+      * @param x The numerator.
+      * @param y The denominator.
+    \**/
+    Fraction(const int x, const int y);
+
+
+    /**\
+      * @brief Construct a new Fraction object without parameters.
+      * 
+      * -> {1, 1}
+    \**/
+    Fraction();
 
     // ! -------------------------- OPERATOR OVERLOAD
 
     // ! ------------- + OPERATOR
 
     // ! ------ Fraction + Fraction
-	Fraction operator+(const Fraction frac); // Overload Of The + Operator Allowing To Use The '+' Operator Between Two Fractions.
+    /**\
+      * @brief Overload Of The + Operator Allowing To Use The '+' Operator Between Two Fractions.
+      * 
+      * @param frac The second fraction
+      * @return Fraction The fraction resulting from the sum 
+    \**/
+	Fraction operator+(const Fraction frac);
 
 
     // ! ------ Fraction + Integer
-    Fraction operator+(const int n); // Overload Of The + Operator Allowing To Use The '+' Operator Between A Fraction And An Integer.
+    /**\
+      * @brief Overload Of The + Operator Allowing To Use The '+' Operator Between A Fraction And An Integer.
+      * 
+      * @param n Integer to be added to the Fraction
+      * @return Fraction The fraction resulting from the sum 
+    \**/
+    Fraction operator+(const int n);
 
     // ! ------------- - OPERATOR
 
         // ! ------ Fraction - Fraction
-    Fraction operator-(const Fraction frac); // Overload Of The - Operator Allowing To Use The '-' Operator Between Two Fractions.
+    /**\
+      * @brief Overload Of The - Operator Allowing To Use The '-' Operator Between Two Fractions.
+      * 
+      * @param frac The second fraction
+      * @return Fraction The fraction resulting from the subtraction.
+    \**/
+    Fraction operator-(const Fraction frac);
 
     // ! ------ Fraction - Integer
-    Fraction operator-(const int n); // Overload Of The - Operator Allowing To Use The '-' Operator A Fraction And An Integer.
+    /**\
+      * @brief Overload Of The - Operator Allowing To Use The '-' Operator A Fraction And An Integer.
+      * 
+      * @param n Integer to be subtracted from the fraction
+      * @return Fraction The fraction resulting from the subtraction
+    \**/
+    Fraction operator-(const int n); // 
 
     // ! ------------- * OPERATOR
 
     // ! ------ Fraction * Fraction
-    Fraction operator* (const Fraction frac); // Overload Of The * Operator Allowing To Use The '*' Operator Between Two Fractions.
+    /**\
+      * @brief Overload Of The - Operator Allowing To Use The '-' Operator A Fraction And An Integer.
+      * 
+      * @param frac The second fraction
+      * @return Fraction The fraction resulting from the multiplication
+    \**/
+    Fraction operator* (const Fraction frac);
 
     // ! ------ Fraction * Integer
-    Fraction operator* (const int n); // Overload Of The * Operator Allowing To Use The '*' Operator Between A Fraction And An Integer.
+    /**\
+      * @brief Overload Of The * Operator Allowing To Use The '*' Operator Between A Fraction And An Integer.
+      * 
+      * @param n Integer to multiply with the fraction
+      * @return Fraction The fraction resulting from the multiplication
+    \**/
+    Fraction operator* (const int n);
 
     // ! ------------- OPERATOR /
-    Fraction operator/ (const Fraction frac);  // Overloading of the - operator allowing to use the '-' operator between two Fractions
+    /**\
+      * @brief Overloading of the - operator allowing to use the '-' operator between two Fractions
+      * 
+      * @param frac The second fraction.
+      * @return Fraction The fraction resulting from the division.
+    \**/
+    Fraction operator/ (const Fraction frac);
 
     // ! ------------- OPERATOR <<
+    /**\
+      * @brief Allows to cout a fraction.
+      * 
+      * @param out Do not touch this
+      * @param frac The fraction to cout
+      * @return ostream& Do not touch this
+    \**/
 	friend ostream &operator<<(ostream &out, const Fraction frac) {
         if (frac.denominator == frac.numerator) {
             cout << 1;
@@ -102,13 +172,38 @@ struct Fraction {
     };
 
     // ! ------------- Comparison Operator <
+    /**\
+      * @brief Allows a < comparison between two functions
+      * 
+      * @param frac The second fraction, automatically passed
+      * @return true 
+      * @return false 
+    \**/
     bool operator< (const Fraction frac);
 
     // ! ------------- Comparison Operator >
+    /**\
+      * @brief Allows a > comparison between two functions
+      * 
+      * @param frac 
+      * @return true 
+      * @return false 
+    \**/
     bool operator> (const Fraction frac);
 
     // ! ------------- Comparison Operator =
+    /**\
+      * @brief Allows an equality comparison between two functions
+      * 
+      * @param frac 
+      * @return true 
+      * @return false 
+    \**/
     bool operator= (Fraction frac);
+
+    private:
+        int numerator;
+        int denominator;
 };
 
 //.  ===============================================================================================

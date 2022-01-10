@@ -15,6 +15,16 @@
 //.  ===============================================================================================
 //.                                           FRACTIONS                                             
 //.  ===============================================================================================
+Fraction::Fraction(const int x, const int y) {
+    numerator = x;
+    denominator = y;
+}
+
+Fraction::Fraction() {
+    numerator = 1;
+    denominator = 1;
+}
+
 Fraction Fraction::operator+ (const Fraction frac) {
     Fraction fractionResultat;
 
@@ -162,48 +172,6 @@ Matrix::Matrix(const int i) {
     n = i;
     m = n;
 }
-
-
-// ostream& operator<<(ostream& os, const Matrix& Matrix_) {
-//     vector<vector<double> > matrix;
-//     vector<double> maxValuesByColums;
-    
-//     matrix = Matrix_.matrix;
-
-//     for (int j{}; j < matrix[0].size(); j++) {
-//         double collumnMax{};
-        
-//         for (int i = 0; i < matrix.size() ; i++) {
-//             if (getSize(matrix[i][j]) > collumnMax) {
-//                 collumnMax = getSize(matrix[i][j]);
-//             }
-//         }
-//         maxValuesByColums.push_back(collumnMax);
-//     }
-
-//     for (int i{}; i < matrix.size(); i++) {
-//         cout << '|';
-        
-//         for (int j{}; j < matrix[0].size(); j++) {
-//             if (j == 0) {
-//                 cout << " ";
-//             }
-            
-//             for (
-//                 int s{};
-//                 s < (maxValuesByColums[j] - getSize(matrix[i][j]));
-//                 s++
-//                 ) {
-//                 cout << " ";
-//             }
-            
-//             cout << matrix[i][j] << " ";
-//         }
-
-//         cout << '|' << endl;
-//     }
-//     return os;
-// }
 
 
 /**\
