@@ -15,6 +15,25 @@
 //.  ===============================================================================================
 //.                                           FRACTIONS                                             
 //.  ===============================================================================================
+Fraction Fraction::simplify() {
+    Fraction fractionSimplifiee;
+    
+    int gcdFrac = gcd(numerator, denominator);
+
+    fractionSimplifiee.numerator = numerator / gcdFrac;
+    fractionSimplifiee.denominator = denominator / gcdFrac;
+
+    return fractionSimplifiee;
+}
+
+int& Fraction::getNumerator() {
+    return numerator;
+}
+
+int& Fraction::getDenominator() {
+    return denominator;
+}
+
 Fraction::Fraction(const int x, const int y) {
     numerator = x;
     denominator = y;
@@ -99,15 +118,22 @@ Fraction Fraction::operator/ (const Fraction frac) {
     return fractionBase * fractionBase2;
 }
 
-ostream& operator<<(std::ostream& out, const Fraction& frac) {
-    if (frac.denominator == frac.numerator) {
+ostream& operator<<(std::ostream& out, /*const*/ Fraction& frac) {
+
+    int numerator;
+    int denominator;
+
+    numerator = frac.getNumerator();
+    denominator = frac.getDenominator();
+
+    if (denominator == numerator) {
         cout << 1;
-    } else if (frac.denominator == 1) {
-        cout << frac.numerator;
-    } else if (frac.numerator == 0) {
+    } else if (denominator == 1) {
+        cout << numerator;
+    } else if (numerator == 0) {
         cout << 0;
     } else {
-        cout << frac.numerator << "/" << frac.denominator;
+        cout << numerator << "/" << denominator;
     }
 
     return out;
@@ -137,51 +163,20 @@ bool Fraction::operator= (Fraction frac) {
     return (frac.numerator*denominator == numerator*frac.denominator);
 }
 
-Fraction Fraction::simplify() {
-    Fraction fractionSimplifiee;
-    
-    int gcdFrac = gcd(numerator, denominator);
-
-    fractionSimplifiee.numerator = numerator / gcdFrac;
-    fractionSimplifiee.denominator = denominator / gcdFrac;
-
-    return fractionSimplifiee;
-}
-
 
 //.  ===============================================================================================
 //.                                           MATRICES                                              
 //.  ===============================================================================================
-/**\
-  * @brief Construct a new Matrix object. In the case where the number of rows and columns is different.
-  * 
-  * @param x Number of lines.
-  * @param y Number of columns.
-\**/
 Matrix::Matrix(const int x, const int y) {
     n = x;
     m = y;
 }
 
-/**\
-  * @brief Construct a new Matrix object. In the case where the number of rows and columns is the same.
-  * 
-  * @param i Number of lines AND colomns.
-\**/
 Matrix::Matrix(const int i) {
     n = i;
     m = n;
 }
 
-
-/**\
-  * @brief Graphically shows the matrix
-  * Exemple :
-  * | 1   2 3 |
-  * | 4 -54 6 |
-  * | 7  84 9 |
-  * 
-\**/
 void Matrix::show() {
     vector<double> maxValuesByColums;
     
@@ -219,11 +214,6 @@ void Matrix::show() {
     }
 }
 
-/**\
-  * @brief Change or initialize the matrix.
-  * 
-  * @param matrixArgument Matrix.
-\**/
 void Matrix::changeMatrix(vector<vector<double> > matrixArgument) {
     matrix = matrixArgument;
     n = matrix.size();
@@ -231,45 +221,21 @@ void Matrix::changeMatrix(vector<vector<double> > matrixArgument) {
 }
 
 
-/**\
-  * @brief Return the number of lines of the matrix.
-  * 
-  * @return int number of lines of the matrix
-\**/
 int Matrix::get_n() {
     return n;
 }
 
 
-/**\
-  * @brief Return the number of columns of the matrix.
-  * 
-  * @return int number of columns of the matrix
-\**/
 int Matrix::get_m(void) {
     return m;
 }
 
 
-/**\
-  * @brief Return the matrix.
-  * 
-  * @return vector<vector<double> > the matrix.
-\**/
 vector<vector<double> > Matrix::get_matrix() { return matrix; }
 
 //.  ===============================================================================================
 //.                                            NUMBERS                                              
 //.  ===============================================================================================
-/**\
-  * @brief Get the number of space that this number is taking for writing it.
-  * Ex :
-  *     2      -> 1
-  *     -3     -> 2
-  *     -34.43 -> 6
-  * @param number Number whose size we want to know.
-  * @return int Size of that number.
-\**/
 int getSize(double number) {
     std::ostringstream streamObj;
     streamObj << number;
@@ -278,26 +244,11 @@ int getSize(double number) {
     return streamObj.str().size();
 }
 
-
-/**\
-  * @brief Returns if the double is an integer.
-  * 
-  * @param number Double number.
-  * @return true The double is an integer.
-  * @return false The double is not an integer.
-\**/
 bool isInteger(double number) {
     return !(double(number - (int)number) > 0);
 }
 
 
-/**\
-  * @brief Returns the gcd of two numbers.
-  * 
-  * @param nb1 Number 1.
-  * @param nb2 Number 2.
-  * @return int Gcd of Number 1 and Number 2.
-\**/
 int gcd(const int nb1, const int nb2) {
     int min = (nb1 < nb2) ? nb1 : nb2;
 
@@ -310,14 +261,6 @@ int gcd(const int nb1, const int nb2) {
     return 1;
 }
 
-
-/**\
-  * @brief Rounding a number to n decimal places.
-  * 
-  * @param number Number we want to round up.
-  * @param n Number of decimal places.
-  * @return double Rounded number.
-\**/
 double roundTo(double number, int n) {
     stringstream tmp;
     tmp << setprecision(n) << fixed << number;
@@ -325,13 +268,6 @@ double roundTo(double number, int n) {
 }
 
 
-/**\
-  * @brief Custom function to round a number
-  * 
-  * @param number Number we want to round up.
-  * @param n Number of decimal places.
-  * @return double Rounded number.
-\**/
 double roundTom(double number, int n) {
     return isInteger(number) ? number : roundTo(number, n);
 }
@@ -340,12 +276,6 @@ double roundTom(double number, int n) {
 //.  ===============================================================================================
 //.                                            VECTORS                                              
 //.  ===============================================================================================
-/**\
-  * @brief Get the max number from a vector.
-  * 
-  * @param line the vector. 
-  * @return double the max number of that vector.
-\**/
 double getMaxVector(vector<double> line) {
     int len = line.size();
     int max = line.at(0);
@@ -359,13 +289,6 @@ double getMaxVector(vector<double> line) {
     return max;
 }
 
-
-/**\
-  * @brief Get the min number from a vector.
-  * 
-  * @param line the vector. 
-  * @return double the min number of that vector.
-\**/
 double getMinVector(vector<double> line) {
     int len = line.size();
     int min = line.at(0);
