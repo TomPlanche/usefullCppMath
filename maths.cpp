@@ -16,10 +16,14 @@
 //.                                           FRACTIONS                                             
 //.  ===============================================================================================
 Fraction Fraction::simplify() {
+    // ! Variables Declaration
     Fraction fractionSimplifiee;
+    int gcdFrac;
     
-    int gcdFrac = gcd(numerator, denominator);
+    // ! Variables Definition
+    gcdFrac = gcd(numerator, denominator);
 
+    // ! Treatments
     fractionSimplifiee.numerator = numerator / gcdFrac;
     fractionSimplifiee.denominator = denominator / gcdFrac;
 
@@ -35,18 +39,22 @@ int& Fraction::getDenominator() {
 }
 
 Fraction::Fraction(const int x, const int y) {
+    // ! Treatments
     numerator = x;
     denominator = y;
 }
 
 Fraction::Fraction() {
+    // ! Treatments
     numerator = 1;
     denominator = 1;
 }
 
 Fraction Fraction::operator+ (const Fraction frac) {
+    // ! Variables Declaration
     Fraction fractionResultat;
 
+    // ! Treatments
     if (denominator == frac.denominator) {
         fractionResultat.numerator = numerator + frac.numerator;
         fractionResultat.denominator = denominator;
@@ -59,8 +67,10 @@ Fraction Fraction::operator+ (const Fraction frac) {
 }
 
 Fraction Fraction::operator+ (const int n) {
+    // ! Variables Declaration
     Fraction fractionResultat;
 
+    // ! Treatments
     fractionResultat.numerator += denominator * (numerator >= denominator ? n + 1 : n);
     fractionResultat.denominator = denominator;
 
@@ -68,8 +78,10 @@ Fraction Fraction::operator+ (const int n) {
 }
 
 Fraction Fraction::operator- (const Fraction frac) {
+    // ! Variables Declaration
     Fraction fractionResultat;
 
+    // ! Treatments
     if (denominator == frac.denominator) {
         fractionResultat.numerator = numerator - frac.numerator;
         fractionResultat.denominator = denominator;
@@ -82,9 +94,10 @@ Fraction Fraction::operator- (const Fraction frac) {
 }
 
 Fraction Fraction::operator- (const int n) {
+    // ! Variables Declaration
     Fraction fractionResultat;
 
-    
+    // ! Treatments
     fractionResultat.numerator = numerator - (denominator * (numerator >= denominator ? n : n + 1));
     fractionResultat.denominator = denominator ;
     
@@ -93,8 +106,10 @@ Fraction Fraction::operator- (const int n) {
 }
 
 Fraction Fraction::operator* (const Fraction frac) {
+    // ! Variables Declaration
     Fraction fractionResultat;
 
+    // ! Treatments
     fractionResultat.numerator = numerator * frac.numerator;
     fractionResultat.denominator = denominator * frac.denominator;
 
@@ -102,8 +117,10 @@ Fraction Fraction::operator* (const Fraction frac) {
 }
 
 Fraction Fraction::operator* (const int n) {
+    // ! Variables Declaration
     Fraction fractionResultat;
 
+    // ! Treatments
     fractionResultat.numerator = numerator * n;
     fractionResultat.denominator = denominator;
 
@@ -111,6 +128,7 @@ Fraction Fraction::operator* (const int n) {
 }
 
 Fraction Fraction::operator/ (const Fraction frac) {
+    // ! Treatments
     Fraction fractionBase = {numerator, denominator};
     Fraction fractionBase2 = {frac.denominator, frac.numerator};
     
@@ -119,13 +137,15 @@ Fraction Fraction::operator/ (const Fraction frac) {
 }
 
 ostream& operator<<(std::ostream& out, /*const*/ Fraction& frac) {
-
+    // ! Variables Declaration
     int numerator;
     int denominator;
 
+    // ! Variables Definition
     numerator = frac.getNumerator();
     denominator = frac.getDenominator();
 
+    // ! Treatments
     if (denominator == numerator) {
         cout << 1;
     } else if (denominator == 1) {
@@ -140,14 +160,16 @@ ostream& operator<<(std::ostream& out, /*const*/ Fraction& frac) {
 }
 
 bool Fraction::operator< (const Fraction frac) {
+    // ! Treatments
     if (frac.denominator == denominator) {
         return (numerator < frac.numerator);
     }
 
-    return ((frac.numerator*denominator) < (numerator*frac.denominator));
+    return ((frac.numerator * denominator) < (numerator * frac.denominator));
 }
 
 bool Fraction::operator> (const Fraction frac) {
+    // ! Treatments
     if (frac.denominator == denominator) {
         return (numerator > frac.numerator);
     }
@@ -156,6 +178,7 @@ bool Fraction::operator> (const Fraction frac) {
 }
 
 bool Fraction::operator= (Fraction frac) {
+    // ! Treatments
     if (frac.denominator == denominator) {
         return (numerator = frac.numerator);
     }
@@ -168,18 +191,22 @@ bool Fraction::operator= (Fraction frac) {
 //.                                           MATRICES                                              
 //.  ===============================================================================================
 Matrix::Matrix(const int x, const int y) {
+    // ! Treatments
     n = x;
     m = y;
 }
 
 Matrix::Matrix(const int i) {
+    // ! Treatments
     n = i;
     m = n;
 }
 
 void Matrix::show() {
+    // ! Variables Declaration
     vector<double> maxValuesByColums;
     
+    // ! Treatments
     for (int j{}; j < matrix[0].size(); j++) {
         double collumnMax{};
         
@@ -215,6 +242,7 @@ void Matrix::show() {
 }
 
 void Matrix::changeMatrix(vector<vector<double> > matrixArgument) {
+    // ! Treatments
     matrix = matrixArgument;
     n = matrix.size();
     m = matrix[0].size();
@@ -222,36 +250,47 @@ void Matrix::changeMatrix(vector<vector<double> > matrixArgument) {
 
 
 int Matrix::get_n() {
+    // ! Treatments
     return n;
 }
 
 
 int Matrix::get_m(void) {
+    // ! Treatments
     return m;
 }
 
 
-vector<vector<double> > Matrix::get_matrix() { return matrix; }
+vector<vector<double>> Matrix::get_matrix() { return matrix; }
 
 //.  ===============================================================================================
 //.                                            NUMBERS                                              
 //.  ===============================================================================================
 int getSize(double number) {
+    // ! Variables Declaration
     std::ostringstream streamObj;
+
+    // ! Variables Definition
     streamObj << number;
     
-    
+    // ! Treatments
     return streamObj.str().size();
 }
 
 bool isInteger(double number) {
+    // ! Treatments
     return !(double(number - (int)number) > 0);
 }
 
 
 int gcd(const int nb1, const int nb2) {
-    int min = (nb1 < nb2) ? nb1 : nb2;
+    // ! Variables Declaration
+    int min;
 
+    // ! Définition Variables
+    min = (nb1 < nb2) ? nb1 : nb2;
+
+    // ! Treatments
     for (int i = min; i <= min; i--) {
         if ((nb1 % i == 0) && (nb2 % i == 0)) {
             return i;
@@ -262,13 +301,19 @@ int gcd(const int nb1, const int nb2) {
 }
 
 double roundTo(double number, int n) {
+    // ! Variables Declaration
     stringstream tmp;
+
+    // ! Variables Definition
     tmp << setprecision(n) << fixed << number;
+    
+    // ! Treatments
     return stod(tmp.str());  
 }
 
 
 double roundTom(double number, int n) {
+    // ! Treatments
     return isInteger(number) ? number : roundTo(number, n);
 }
 
@@ -277,9 +322,14 @@ double roundTom(double number, int n) {
 //.                                            VECTORS                                              
 //.  ===============================================================================================
 double getMaxVector(vector<double> line) {
-    int len = line.size();
-    int max = line.at(0);
+    // ! Variables Declaration
+    int len, max;
 
+    // ! Variables Definition
+    len = line.size();
+    max = line.at(0);
+
+    // ! Treatments
     for (int i = 0; i < len; i++) {
         if (line.at(i) > max) {
             max = line.at(i);
@@ -290,9 +340,14 @@ double getMaxVector(vector<double> line) {
 }
 
 double getMinVector(vector<double> line) {
-    int len = line.size();
-    int min = line.at(0);
+    // ! Variables Declaration
+    int len, min;
 
+    // ! Variables Definition
+    len = line.size();
+    min = line.at(0);
+
+    // ! Treatments
     for (int i = 0; i < len; i++) {
         if (line.at(i) < min) {
             min = line.at(i);
