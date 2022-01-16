@@ -190,57 +190,35 @@ bool Fraction::operator= (Fraction frac) {
 //.  ===============================================================================================
 //.                                           MATRICES                                              
 //.  ===============================================================================================
+
+//.  ----------------------------------- MATRIX CONSTRUCTORS ---------------------------------------
 Matrix::Matrix(const int x, const int y) {
     // ! Treatments
-    n = x;
-    m = y;
+    m = x;
+    n = y;
 }
 
 Matrix::Matrix(const int i) {
     // ! Treatments
+    m = i;
     n = i;
-    m = n;
 }
 
-void Matrix::show() {
-    // ! Variables Declaration
-    vector<double> maxValuesByColums;
-    
+//.  ---------------------------------- GET MATRIX ATTIBUTES ---------------------------------------
+int Matrix::get_n() {
     // ! Treatments
-    for (int j{}; j < matrix[0].size(); j++) {
-        double collumnMax{};
-        
-        for (int i = 0; i < matrix.size() ; i++) {
-            if (getSize(matrix[i][j]) > collumnMax) {
-                collumnMax = getSize(matrix[i][j]);
-            }
-        }
-        maxValuesByColums.push_back(collumnMax);
-    }
-
-    for (int i{}; i < matrix.size(); i++) {
-        cout << '|';
-        
-        for (int j{}; j < matrix[0].size(); j++) {
-            if (j == 0) {
-                cout << " ";
-            }
-            
-            for (
-                int s{};
-                s < (maxValuesByColums[j] - getSize(matrix[i][j]));
-                s++
-                ) {
-                cout << " ";
-            }
-            
-            cout << matrix[i][j] << " ";
-        }
-
-        cout << '|' << endl;
-    }
+    return n;
 }
 
+int Matrix::get_m(void) {
+    // ! Treatments
+    return m;
+}
+
+vector<vector<double>> Matrix::get_matrix() { return matrix; }
+
+
+//.  --------------------------------------- PROCEDURES --------------------------------------------
 void Matrix::changeMatrix(vector<vector<double> > matrixArgument) {
     // ! Treatments
     matrix = matrixArgument;
@@ -248,25 +226,105 @@ void Matrix::changeMatrix(vector<vector<double> > matrixArgument) {
     m = matrix[0].size();
 }
 
+void Matrix::initialize() {
+    vector<double> line;
+    for (int i{}; i < get_m(); i++) {
+        line.clear();
+        for (int j{}; j < get_n(); j++) {
+            line.push_back(0);
+        }
+        matrix.push_back(line);
+    }
+}
 
-int Matrix::get_n() {
-    // ! Treatments
-    return n;
+//.  ---------------------------------------- FUNCTIONS --------------------------------------------
+bool Matrix::isSquare() {
+    return get_m() == get_n();
+}
+
+bool Matrix::isTriangular() {
+    bool isTriangle;
+
+    isTriangle = true;
+
+    for (int i{1}; i < matrix.size(); i++) {
+        for (int j{}; j < i; j++) {
+            if (matrix[i][j] != 0) {
+                isTriangle = false;
+            }
+        }
+    }
+
+    return isTriangle;
+}
+
+//.  ----------------------------------- OPERATOR OVERLOADS ----------------------------------------
+Matrix Matrix::operator+ (const Matrix matrix2) {
+    Matrix finalMatrix(matrix.size(), matrix2.matrix[0].size());
+
+    finalMatrix.initialize();
+
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j{}; j < matrix2.matrix.size(); j++) {
+            finalMatrix.matrix[i][j] = matrix[i][j] + matrix2.matrix[i][j];
+        }
+    }
+
+    return finalMatrix;
+}
+
+Matrix Matrix::operator- (const Matrix matrix2) {
+    Matrix finalMatrix(matrix.size(), matrix2.matrix[0].size());
+
+    finalMatrix.initialize();
+
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j{}; j < matrix2.matrix.size(); j++) {
+            finalMatrix.matrix[i][j] = matrix[i][j] - matrix2.matrix[i][j];
+        }
+    }
+
+    return finalMatrix;
 }
 
 
-int Matrix::get_m(void) {
-    // ! Treatments
-    return m;
+Matrix Matrix::operator* (Matrix matrix2) { 
+	Matrix finalMatrix(matrix.size(), matrix2.matrix[0].size());
+
+    finalMatrix.initialize();
+	
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j{}; j < matrix2.matrix.size(); j++) {
+            double sum{};
+            for (int k{}; k < matrix2.matrix.size(); k++) {
+                sum += (matrix[i][k] * matrix2.matrix[k][j]);
+            }
+            cout << sum << endl;
+            finalMatrix.matrix[i][j] = sum;
+        }
+    }
+
+    return finalMatrix;
 }
 
+Matrix Matrix::operator* (const double number) {
+    Matrix finalMatrix(matrix.size(), matrix[0].size());
 
-vector<vector<double>> Matrix::get_matrix() { return matrix; }
+    finalMatrix.matrix = get_matrix();
+
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j{}; j < matrix[0].size(); j++) {
+            finalMatrix.matrix[i][j] *= number;
+        }
+    }
+
+    return finalMatrix;
+}
 
 //.  ===============================================================================================
 //.                                            NUMBERS                                              
 //.  ===============================================================================================
-int getSize(double number) {
+int getNumberSize(double number) {
     // ! Variables Declaration
     std::ostringstream streamObj;
 
@@ -287,7 +345,7 @@ int gcd(const int nb1, const int nb2) {
     // ! Variables Declaration
     int min;
 
-    // ! Définition Variables
+    // ! Définition Variablesq
     min = (nb1 < nb2) ? nb1 : nb2;
 
     // ! Treatments

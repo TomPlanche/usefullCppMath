@@ -8,6 +8,9 @@
   *
 \**/
 
+#ifndef MATHS_H
+#define MATHS_H
+
 // ! IMPORT OF THE NECESSARY LIBRARIES.
 #include <iomanip>
 #include <iostream>
@@ -15,8 +18,6 @@
 #include <string>
 #include <vector>
 
-#ifndef MATHS_H
-#define MATHS_H
 
 // ! Importing Necessary Bases (cin, cout, endl) To Avoid `using namespace std`.
 using std::cin;
@@ -92,7 +93,7 @@ double roundTo(double val, int n);
 //.  ===============================================================================================
 class Fraction {
     public:
-        // ! ---------------------------------------------------- FONCTIONS ----------------------------------------------------
+        //.  ------------------------------------ FONCTIONS ----------------------------------------
         /**\
          * @brief Simplify a fraction.
          * 
@@ -106,7 +107,7 @@ class Fraction {
 
         int& getDenominator();
 
-        ~ Fraction();
+        // ~ Fraction();
 
 
         /**\
@@ -177,7 +178,7 @@ class Fraction {
          * @param frac The second fraction
          * @return Fraction The fraction resulting from the multiplication
         \**/
-        Fraction operator* (const Fraction frac);
+        Fraction operator* (Fraction frac);
 
         // ! ------ Fraction * Integer
         /**\
@@ -259,39 +260,7 @@ class Fraction {
 //.  ===============================================================================================
 class Matrix {
     public:
-
-        /**\
-         * @brief Return the number of lines of the matrix.
-         * 
-         * @return int number of lines of the matrix
-        \**/
-        int get_n();
-
-        
-        /**\
-         * @brief Return the number of columns of the matrix.
-         * 
-         * @return int number of columns of the matrix
-        \**/
-        int get_m();
-
-        void show();
-
-        /**\
-         * @brief Return the matrix.
-         * 
-         * @return vector<vector<double> > the matrix.
-        \**/
-        vector<vector<double>> get_matrix();
-
-
-        /**\
-         * @brief Change or initialize the matrix.
-         * 
-         * @param matrixArgument Matrix.
-        \**/
-        void changeMatrix(vector<vector<double>> matrix);
-
+        //.  ---------------------------------- CONSTRUCTORS ---------------------------------------
         /**\
          * @brief Construct a new Matrix object. In the case where the number of rows and columns is different.
          * 
@@ -308,13 +277,108 @@ class Matrix {
         \**/
         Matrix(const int i);
 
+        /**\
+          * @brief Construct a new Matrix object.
+          * 
+        \**/
+        Matrix() {};
 
+        //.  ----------------------------------- DESTRUCTOR ----------------------------------------
         /**\
           * @brief Destroy the Matrix object
           * 
         \**/
         ~Matrix() {}
 
+
+        //.  ------------------------------ GET MATRIX ATTIBUTES -----------------------------------
+        /**\
+         * @brief Return the number of lines of the matrix.
+         * 
+         * @return int number of lines of the matrix
+        \**/
+        int get_n();
+
+        
+        /**\
+         * @brief Return the number of columns of the matrix.
+         * 
+         * @return int number of columns of the matrix
+        \**/
+        int get_m();
+
+
+        /**\
+         * @brief Return the matrix.
+         * 
+         * @return vector<vector<double> > the matrix.
+        \**/
+        vector<vector<double>> get_matrix();
+
+
+        //.  --------------------------------------- PROCEDURES --------------------------------------------    
+        /**\
+         * @brief Change or initialize the matrix.
+         * 
+         * @param matrixArgument Matrix.
+        \**/
+        void changeMatrix(vector<vector<double>> matrix);
+
+
+        /**\
+          * @brief Initialize the matrix - Creates the 0(m,n) matrix.
+          * 
+        \**/
+        void initialize();
+
+
+        //.  ------------------------------------ FUNCTIONS ----------------------------------------
+        /**\
+          * @brief Check if the matrix is squared.
+          * 
+          * @return true The matrix is squared.
+          * @return false The matrix is not squared.
+        \**/
+        bool isSquare();
+
+
+        bool isTriangular();
+
+        //.  ------------------------------- OPERATOR OVERLOADS ------------------------------------
+        /**\
+          * @brief Overloading of the addition operator to add two matrices.
+          * 
+          * @param matrix Matrix n°2.
+          * @return Matrix The resulting matrix.
+        \**/
+        Matrix operator+ (const Matrix matrix);
+
+
+        /**\
+          * @brief Overloading of the subtraction operator to subtract two matrices.
+          * 
+          * @param matrix Matrix n°2.
+          * @return Matrix The resulting matrix.
+        \**/
+        Matrix operator- (const Matrix matrix);
+
+        
+        /**\
+          * @brief Overloading of the multiplication operator to multiply two matrices.
+          * 
+          * @param matrix Matrix n°2.
+          * @return Matrix The resulting matrix.
+        \**/
+        Matrix operator* (const Matrix matrix);
+        
+
+        /**\
+          * @brieg Overloading of the multiplication operator to multiply a matrix with a number.
+          * 
+          * @param number Number with which the matrix is multiplied.
+          * @return Matrix The resulting matrix.
+        \**/
+        Matrix operator* (const double number);
 
         /**\
          * @brief Graphically shows the matrix
@@ -364,7 +428,7 @@ class Matrix {
         };
 
     private:
-        int n, m;
+        int m, n;
         vector<vector<double>> matrix;
 };
 

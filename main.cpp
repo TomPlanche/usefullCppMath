@@ -23,10 +23,11 @@
 //.                                             MAIN                                                
 //.  ===============================================================================================
 
-int main(void) {
+int main() {
     // . Variable declarations
     Matrix M1(3);
     vector<vector<double> > matrice1;
+    vector<vector<double> > matrice2;
 
     // . Variables Definition
 
@@ -57,13 +58,26 @@ int main(void) {
 
     M1.changeMatrix(matrice1);
 
-    M1.show();
+    cout << M1.isTriangular() << endl;
+
+    matrice2 = {
+        {1, 2, 3},
+        {0, -54, 6},
+        {0, 0, 9}
+    };
+
+    M1.changeMatrix(matrice2);
+
+    cout << M1.isTriangular() << endl;
+    cout << M1.isSquare() << endl;
+    // M1.initialize();
+
+    // M1.show();
+
+    // cout << M1 << endl;
 
 
-    Fraction f1 = {1,5};
 
-    cout << f1 << endl;
-    cout << M1 << endl;
 
 
 
