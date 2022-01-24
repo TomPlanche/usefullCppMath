@@ -3,23 +3,23 @@
   * @author Tom Planche (tomplanche@icloud.com)
   * @brief My Maths Usefull Functions
   * @date 07-01-2022
-  * 
+  *
   * @copyright Copyright (c) 2022
-  * 
+  *
 \**/
 
 // ! IMPORT OF THE NECESSARY LIBRARIES.
 #include "maths.h"
 
 
-//.  ===============================================================================================
-//.                                           FRACTIONS                                             
-//.  ===============================================================================================
+//.  ===========================================================================
+//.                                 FRACTIONS                                   
+//.  ===========================================================================
 Fraction Fraction::simplify() {
     // ! Variables Declaration
     Fraction fractionSimplifiee;
     int gcdFrac;
-    
+
     // ! Variables Definition
     gcdFrac = gcd(numerator, denominator);
 
@@ -30,13 +30,9 @@ Fraction Fraction::simplify() {
     return fractionSimplifiee;
 }
 
-int& Fraction::getNumerator() {
-    return numerator;
-}
+int& Fraction::getNumerator() { return numerator; }
 
-int& Fraction::getDenominator() {
-    return denominator;
-}
+int& Fraction::getDenominator() { return denominator; }
 
 Fraction::Fraction(const int x, const int y) {
     // ! Treatments
@@ -50,7 +46,7 @@ Fraction::Fraction() {
     denominator = 1;
 }
 
-Fraction Fraction::operator+ (const Fraction frac) {
+Fraction Fraction::operator+(const Fraction frac) {
     // ! Variables Declaration
     Fraction fractionResultat;
 
@@ -59,25 +55,27 @@ Fraction Fraction::operator+ (const Fraction frac) {
         fractionResultat.numerator = numerator + frac.numerator;
         fractionResultat.denominator = denominator;
     } else {
-        fractionResultat.numerator = numerator * frac.denominator + frac.numerator * denominator;
+        fractionResultat.numerator =
+            numerator * frac.denominator + frac.numerator * denominator;
         fractionResultat.denominator = denominator * frac.denominator;
     }
 
     return fractionResultat.simplify();
 }
 
-Fraction Fraction::operator+ (const int n) {
+Fraction Fraction::operator+(const int n) {
     // ! Variables Declaration
     Fraction fractionResultat;
 
     // ! Treatments
-    fractionResultat.numerator += denominator * (numerator >= denominator ? n + 1 : n);
+    fractionResultat.numerator +=
+        denominator * (numerator >= denominator ? n + 1 : n);
     fractionResultat.denominator = denominator;
 
     return fractionResultat.simplify();
 }
 
-Fraction Fraction::operator- (const Fraction frac) {
+Fraction Fraction::operator-(const Fraction frac) {
     // ! Variables Declaration
     Fraction fractionResultat;
 
@@ -86,26 +84,27 @@ Fraction Fraction::operator- (const Fraction frac) {
         fractionResultat.numerator = numerator - frac.numerator;
         fractionResultat.denominator = denominator;
     } else {
-        fractionResultat.numerator = numerator * frac.denominator - frac.numerator * denominator;
+        fractionResultat.numerator =
+            numerator * frac.denominator - frac.numerator * denominator;
         fractionResultat.denominator = denominator + frac.denominator;
     }
 
     return fractionResultat.simplify();
 }
 
-Fraction Fraction::operator- (const int n) {
+Fraction Fraction::operator-(const int n) {
     // ! Variables Declaration
     Fraction fractionResultat;
 
     // ! Treatments
-    fractionResultat.numerator = numerator - (denominator * (numerator >= denominator ? n : n + 1));
-    fractionResultat.denominator = denominator ;
-    
+    fractionResultat.numerator =
+        numerator - (denominator * (numerator >= denominator ? n : n + 1));
+    fractionResultat.denominator = denominator;
 
     return fractionResultat.simplify();
 }
 
-Fraction Fraction::operator* (const Fraction frac) {
+Fraction Fraction::operator*(const Fraction frac) {
     // ! Variables Declaration
     Fraction fractionResultat;
 
@@ -116,7 +115,7 @@ Fraction Fraction::operator* (const Fraction frac) {
     return fractionResultat.simplify();
 }
 
-Fraction Fraction::operator* (const int n) {
+Fraction Fraction::operator*(const int n) {
     // ! Variables Declaration
     Fraction fractionResultat;
 
@@ -127,11 +126,10 @@ Fraction Fraction::operator* (const int n) {
     return fractionResultat.simplify();
 }
 
-Fraction Fraction::operator/ (const Fraction frac) {
+Fraction Fraction::operator/(const Fraction frac) {
     // ! Treatments
     Fraction fractionBase = {numerator, denominator};
     Fraction fractionBase2 = {frac.denominator, frac.numerator};
-    
 
     return fractionBase * fractionBase2;
 }
@@ -174,52 +172,58 @@ bool Fraction::operator> (const Fraction frac) {
         return (numerator > frac.numerator);
     }
 
-    return ((frac.numerator*denominator) > (numerator*frac.denominator));
+    return ((frac.numerator * denominator) > (numerator * frac.denominator));
 }
 
-bool Fraction::operator= (Fraction frac) {
+bool Fraction::operator=(Fraction frac) {
     // ! Treatments
     if (frac.denominator == denominator) {
         return (numerator = frac.numerator);
     }
 
-    return (frac.numerator*denominator == numerator*frac.denominator);
+    return (frac.numerator * denominator == numerator * frac.denominator);
 }
 
+//.  ===========================================================================
+//.                                 MATRICES                                    
+//.  ===========================================================================
 
-//.  ===============================================================================================
-//.                                           MATRICES                                              
-//.  ===============================================================================================
+//.  ------------------------- MATRIX CONSTRUCTORS -----------------------------
+Matrix::Matrix(vector<vector<double>> matrix_) { matrix = matrix_; }
 
-//.  ----------------------------------- MATRIX CONSTRUCTORS ---------------------------------------
 Matrix::Matrix(const int x, const int y) {
     // ! Treatments
     m = x;
     n = y;
+
+    initialize();
 }
 
 Matrix::Matrix(const int i) {
     // ! Treatments
     m = i;
     n = i;
+
+    initialize();
 }
 
-//.  ---------------------------------- GET MATRIX ATTIBUTES ---------------------------------------
-int Matrix::get_n() {
+//.  ------------------------ GET MATRIX ATTIBUTES -----------------------------
+int Matrix::get_n() const {
     // ! Treatments
     return n;
 }
 
-int Matrix::get_m(void) {
+int Matrix::get_m(void) const {
     // ! Treatments
     return m;
 }
 
 vector<vector<double>> Matrix::get_matrix() { return matrix; }
 
+//.  ----------------------------- PROCEDURES ----------------------------------
+void Matrix::clear() { matrix.clear(); }
 
-//.  --------------------------------------- PROCEDURES --------------------------------------------
-void Matrix::changeMatrix(vector<vector<double> > matrixArgument) {
+void Matrix::changeMatrix(vector<vector<double>> matrixArgument) {
     // ! Treatments
     matrix = matrixArgument;
     n = matrix.size();
@@ -237,10 +241,52 @@ void Matrix::initialize() {
     }
 }
 
-//.  ---------------------------------------- FUNCTIONS --------------------------------------------
-bool Matrix::isSquare() {
-    return get_m() == get_n();
+// void Matrix::inv() {
+//     Matrix total();
+//     int cpt{};
+
+//     for (double number: matrix[0]) {
+//         for (int i{1}; i < (m - 1); i++) {
+
+//         }
+//     }
+// }
+
+void Matrix::permute(unsigned short int line1, unsigned short int line2) {
+    Matrix permuteMatrix{matrix};
+
+    line1--;
+    line2--;
+
+    matrix[line1] = permuteMatrix[line2];
+    matrix[line2] = permuteMatrix[line1];
 }
+
+void Matrix::permute(Matrix& matrix2, unsigned short int line) {
+    assert(get_m() == matrix2.get_m() && get_n() == matrix2.get_n());
+    Matrix permuteMatrix{matrix};
+
+    line--;
+
+    matrix[line] = matrix2[line];
+    matrix2[line] = permuteMatrix[line];
+}
+
+void Matrix::permute(Matrix& matrix2, unsigned short int line1,
+                     unsigned short int line2) {
+    assert(get_m() == matrix2.get_m() && get_n() == matrix2.get_n());
+
+    Matrix permuteMatrix{matrix};
+
+    line1--;
+    line2--;
+
+    matrix[line1] = matrix2[line2];
+    matrix2[line2] = permuteMatrix[line1];
+}
+
+//.  ------------------------------ FUNCTIONS ----------------------------------
+bool Matrix::isSquare() { return get_m() == get_n(); }
 
 bool Matrix::isTriangular() {
     bool isTriangle;
@@ -258,13 +304,39 @@ bool Matrix::isTriangular() {
     return isTriangle;
 }
 
-//.  ----------------------------------- OPERATOR OVERLOADS ----------------------------------------
-Matrix Matrix::operator+ (const Matrix matrix2) {
-    Matrix finalMatrix(matrix.size(), matrix2.matrix[0].size());
+double Matrix::det(vector<vector<double>> matrix_) {
+    assert(isSquare());
 
-    finalMatrix.initialize();
+    if (matrix_.size() == 1) {
+        matrix_ = matrix;
+    }
 
-    for (int i = 0; i < matrix.size(); i++) {
+    double res{};
+
+    switch (matrix_.size()) {
+        case 2:
+            return ((matrix_[0][0] * matrix_[1][1]) -
+                    (matrix_[0][1] * matrix_[1][0]));
+            break;
+
+        default:
+            int cpt{};
+            double res{};
+
+            for (double nb : matrix_[0]) {
+                res += 1;
+            }
+            break;
+    }
+
+    return res;
+}
+
+//.  ------------------------- OPERATOR OVERLOADS ------------------------------
+Matrix Matrix::operator+(const Matrix matrix2) {
+    Matrix finalMatrix(get_m(), matrix2.get_n());
+
+    for (int i{}; i < matrix.size(); i++) {
         for (int j{}; j < matrix2.matrix.size(); j++) {
             finalMatrix.matrix[i][j] = matrix[i][j] + matrix2.matrix[i][j];
         }
@@ -273,10 +345,8 @@ Matrix Matrix::operator+ (const Matrix matrix2) {
     return finalMatrix;
 }
 
-Matrix Matrix::operator- (const Matrix matrix2) {
+Matrix Matrix::operator-(const Matrix matrix2) {
     Matrix finalMatrix(matrix.size(), matrix2.matrix[0].size());
-
-    finalMatrix.initialize();
 
     for (int i = 0; i < matrix.size(); i++) {
         for (int j{}; j < matrix2.matrix.size(); j++) {
@@ -287,50 +357,48 @@ Matrix Matrix::operator- (const Matrix matrix2) {
     return finalMatrix;
 }
 
+Matrix Matrix::operator*(Matrix matrix2) {
+    Matrix finalMatrix{get_m(), matrix2.get_n()};
 
-Matrix Matrix::operator* (Matrix matrix2) { 
-	Matrix finalMatrix(matrix.size(), matrix2.matrix[0].size());
-
-    finalMatrix.initialize();
-	
-    for (int i = 0; i < matrix.size(); i++) {
-        for (int j{}; j < matrix2.matrix.size(); j++) {
+    for (int i{}; i < get_m(); i++) {
+        for (int j{}; j < matrix2.get_n(); j++) {
             double sum{};
-            for (int k{}; k < matrix2.matrix.size(); k++) {
-                sum += (matrix[i][k] * matrix2.matrix[k][j]);
+            for (int k{}; k < matrix2.get_n(); k++) {
+                sum += (matrix[i][k] * matrix2[k][j]);
             }
-            cout << sum << endl;
-            finalMatrix.matrix[i][j] = sum;
+            finalMatrix[i][j] = sum;
         }
     }
 
     return finalMatrix;
 }
 
-Matrix Matrix::operator* (const double number) {
-    Matrix finalMatrix(matrix.size(), matrix[0].size());
-
-    finalMatrix.matrix = get_matrix();
+Matrix Matrix::operator*(const double number) {
+    Matrix finalMatrix{get_m(), get_n()};
 
     for (int i = 0; i < matrix.size(); i++) {
         for (int j{}; j < matrix[0].size(); j++) {
-            finalMatrix.matrix[i][j] *= number;
+            finalMatrix[i][j] = matrix[i][j] * number;
         }
     }
 
     return finalMatrix;
 }
 
-//.  ===============================================================================================
-//.                                            NUMBERS                                              
-//.  ===============================================================================================
+vector<double>& Matrix::operator[](int i) { return matrix[i]; }
+
+Matrix& Matrix::operator=(const Matrix& matrix_) { return *this; }
+
+//.  ===========================================================================
+//.                                  NUMBERS                                    
+//.  ===========================================================================
 int getNumberSize(double number) {
     // ! Variables Declaration
     std::ostringstream streamObj;
 
     // ! Variables Definition
     streamObj << number;
-    
+
     // ! Treatments
     return streamObj.str().size();
 }
@@ -339,7 +407,6 @@ bool isInteger(double number) {
     // ! Treatments
     return !(double(number - (int)number) > 0);
 }
-
 
 int gcd(const int nb1, const int nb2) {
     // ! Variables Declaration
@@ -364,21 +431,19 @@ double roundTo(double number, int n) {
 
     // ! Variables Definition
     tmp << setprecision(n) << fixed << number;
-    
-    // ! Treatments
-    return stod(tmp.str());  
-}
 
+    // ! Treatments
+    return stod(tmp.str());
+}
 
 double roundTom(double number, int n) {
     // ! Treatments
     return isInteger(number) ? number : roundTo(number, n);
 }
 
-
-//.  ===============================================================================================
-//.                                            VECTORS                                              
-//.  ===============================================================================================
+//.  ===========================================================================
+//.                                  VECTORS                                    
+//.  ===========================================================================
 double getMaxVector(vector<double> line) {
     // ! Variables Declaration
     int len, max;

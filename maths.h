@@ -17,6 +17,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <assert.h>
 
 
 // ! Importing Necessary Bases (cin, cout, endl) To Avoid `using namespace std`.
@@ -31,6 +32,7 @@ using std::stringstream;
 using std::to_string;
 using std::vector;
 using std::ostream;
+using std::size_t;
 
 
 //.  ===============================================================================================
@@ -45,7 +47,7 @@ using std::ostream;
   * @param number Number whose size we want to know.
   * @return int Size of that number.
 \**/
-int getSize(double number);
+int getNumberSize(double number);
 
 
 /**\
@@ -92,6 +94,9 @@ double roundTo(double val, int n);
 //.                                           FRACTION                                              
 //.  ===============================================================================================
 class Fraction {
+    int numerator;
+    int denominator;
+
     public:
         //.  ------------------------------------ FONCTIONS ----------------------------------------
         /**\
@@ -249,10 +254,6 @@ class Fraction {
          * @return false 
         \**/
         bool operator= (Fraction frac);
-
-    private:
-        int numerator;
-        int denominator;
 };
 
 //.  ===============================================================================================
@@ -261,6 +262,8 @@ class Fraction {
 class Matrix {
     public:
         //.  ---------------------------------- CONSTRUCTORS ---------------------------------------
+        Matrix(vector<vector<double>> matrix_);
+
         /**\
          * @brief Construct a new Matrix object. In the case where the number of rows and columns is different.
          * 
@@ -293,19 +296,19 @@ class Matrix {
 
         //.  ------------------------------ GET MATRIX ATTIBUTES -----------------------------------
         /**\
-         * @brief Return the number of lines of the matrix.
-         * 
-         * @return int number of lines of the matrix
-        \**/
-        int get_n();
-
-        
-        /**\
          * @brief Return the number of columns of the matrix.
          * 
          * @return int number of columns of the matrix
         \**/
-        int get_m();
+        int get_m() const;
+
+
+        /**\
+         * @brief Return the number of lines of the matrix.
+         * 
+         * @return int number of lines of the matrix
+        \**/
+        int get_n() const;
 
 
         /**\
@@ -317,6 +320,9 @@ class Matrix {
 
 
         //.  --------------------------------------- PROCEDURES --------------------------------------------    
+        
+        void clear();
+
         /**\
          * @brief Change or initialize the matrix.
          * 
@@ -331,18 +337,63 @@ class Matrix {
         \**/
         void initialize();
 
+        
+        void inv();
+
+
+        /**\
+          * @brief Permute two lines of the same matrix.
+          * 
+          * @param line1 Line one to permute with line two.
+          * @param line2 Line two to permute with line one.
+        \**/
+        void permute(unsigned short int line1, unsigned short int line2);
+
+
+        /**\
+          * @brief Permute two lines of the same index of two matrices.
+          * 
+          * @param matrix2 The second matrix.
+          * @param line The line's index to swap.
+        \**/
+        void permute(Matrix &matrix2, unsigned short int line);
+
+
+        /**\
+          * @brief Permute two lines of different indexes in two matrice.
+          * 
+          * @param matrix2 
+          * @param line1 
+          * @param line2 
+        \**/
+        void permute(Matrix &matrix2, unsigned short int line1, unsigned short int line2);
+
 
         //.  ------------------------------------ FUNCTIONS ----------------------------------------
         /**\
-          * @brief Check if the matrix is squared.
+          * @brief Check if the matrix is square (-> m == n).
           * 
           * @return true The matrix is squared.
           * @return false The matrix is not squared.
         \**/
         bool isSquare();
 
-
+        /**\
+          * @brief Check if the matrix is triangular.
+          * 
+          * @return true The matrix is triangular.
+          * @return false The matrix is not triangular.
+        \**/
         bool isTriangular();
+
+
+        /**\
+          * @brief Determine the determinant of the matrix.
+          * 
+          * @return double The matrix's determinant.
+        \**/
+        double det(vector<vector<double>> matrix_ = {{0}});
+
 
         //.  ------------------------------- OPERATOR OVERLOADS ------------------------------------
         /**\
@@ -380,13 +431,27 @@ class Matrix {
         \**/
         Matrix operator* (const double number);
 
+
         /**\
-         * @brief Graphically shows the matrix
-         * Exemple :
-         * | 1   2 3 |
-         * | 4 -54 6 |
-         * | 7  84 9 |
-         * 
+          * @brief Overloading of the square bracket to access the matrix lines and/or columns.
+          * 
+          * @param i 
+          * @return vector<double>& 
+        \**/
+        vector<double> &operator[](int i);
+
+
+
+        Matrix &operator=(const Matrix &matrix_);
+
+
+        /**\
+         *  @brief Graphically shows the matrix
+         *  Exemple :
+         *  | 1   2 3 |
+         *  | 4 -54 6 |
+         *  | 7  84 9 |
+         *
         \**/
         friend ostream &operator<<(ostream &out, const Matrix matrixx) {
             vector<vector<double>> matrix_final = matrixx.matrix;
@@ -396,8 +461,8 @@ class Matrix {
                 double collumnMax{};
                 
                 for (int i = 0; i < matrixx.matrix.size() ; i++) {
-                    if (getSize(matrixx.matrix[i][j]) > collumnMax) {
-                        collumnMax = getSize(matrix_final[i][j]);
+                    if (getNumberSize(matrixx.matrix[i][j]) > collumnMax) {
+                        collumnMax = getNumberSize(matrix_final[i][j]);
                     }
                 }
                 maxValuesByColums.push_back(collumnMax);
@@ -413,7 +478,7 @@ class Matrix {
                     
                     for (
                         int s{};
-                        s < (maxValuesByColums[j] - getSize(matrix_final[i][j]));
+                        s < (maxValuesByColums[j] - getNumberSize(matrix_final[i][j]));
                         s++
                         ) {
                         cout << " ";
