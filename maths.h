@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 #include <assert.h>
+#include <numeric>
 
 
 // ! Importing Necessary Bases (cin, cout, endl) To Avoid `using namespace std`.
@@ -33,6 +34,8 @@ using std::to_string;
 using std::vector;
 using std::ostream;
 using std::size_t;
+using std::gcd;
+using std::lcm;
 
 
 //.  ===============================================================================================
@@ -84,14 +87,6 @@ bool isPrime(long number);
 bool isPrimeAndOdd(long number);
 
 
-/**\
-  * @brief Returns the gcd of two numbers.
-  * 
-  * @param nb1 Number 1.
-  * @param nb2 Number 2.
-  * @return int Gcd of Number 1 and Number 2.
-\**/
-int gcd(const int nb1, const int nb2);
 
 
 /**\

@@ -422,22 +422,6 @@ bool isInteger(double number) {
     return !(double(number - (int)number) > 0);
 }
 
-int gcd(const int nb1, const int nb2) {
-    if (nb1 == 0 || nb2 == 0) {
-        return 0;
-    }
-        
-
-    if (nb1 == nb2) {
-        return nb1;
-    }
-
-    if (nb1 > nb2) {
-        return gcd(nb1 - nb2, nb2);
-    }
-
-    return gcd(nb1, nb2 - nb1);
-}
 
 double roundTo(double number, int n) {
     // ! Variables Declaration
