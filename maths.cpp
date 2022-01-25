@@ -392,6 +392,10 @@ Matrix& Matrix::operator=(const Matrix& matrix_) { return *this; }
 //.  ===========================================================================
 //.                                  NUMBERS                                    
 //.  ===========================================================================
+bool areCoprime(const long nb1, const long nb2) {
+    return (isPrime(nb1) && isPrime(nb2) && (gcd(nb1, nb2) == 1));
+}
+
 int getNumberSize(double number) {
     // ! Variables Declaration
     std::ostringstream streamObj;
@@ -403,26 +407,36 @@ int getNumberSize(double number) {
     return streamObj.str().size();
 }
 
+bool isPrime(long number) {
+    for (unsigned long i = number - 1; i > 1; i--) {
+        if (number % i == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 bool isInteger(double number) {
     // ! Treatments
     return !(double(number - (int)number) > 0);
 }
 
 int gcd(const int nb1, const int nb2) {
-    // ! Variables Declaration
-    int min;
+    if (nb1 == 0 || nb2 == 0) {
+        return 0;
+    }
+        
 
-    // ! Définition Variablesq
-    min = (nb1 < nb2) ? nb1 : nb2;
-
-    // ! Treatments
-    for (int i = min; i <= min; i--) {
-        if ((nb1 % i == 0) && (nb2 % i == 0)) {
-            return i;
-        }
+    if (nb1 == nb2) {
+        return nb1;
     }
 
-    return 1;
+    if (nb1 > nb2) {
+        return gcd(nb1 - nb2, nb2);
+    }
+
+    return gcd(nb1, nb2 - nb1);
 }
 
 double roundTo(double number, int n) {

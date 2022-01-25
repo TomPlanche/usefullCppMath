@@ -39,6 +39,17 @@ using std::size_t;
 //.                                            NUMBERS                                              
 //.  ===============================================================================================
 /**\
+  * @brief Check if the numbers are coprime.
+  * 
+  * @param nb1 Number one.
+  * @param nb2 Number two.
+  * @return true They are coprimes.
+  * @return false They are coprimes.
+\**/
+bool areCoprime(const long nb1, const long nb2);
+
+
+/**\
   * @brief Get the number of space that this number is taking for writing it.
   * Ex :
   *     2      -> 1
@@ -58,6 +69,19 @@ int getNumberSize(double number);
   * @return false The double is not an integer.
 \**/
 bool isInteger(double N);
+
+
+/**\
+  * @brief Check if the number is a prime.
+  * 
+  * @param number Number to check.
+  * @return true The number is a prime.
+  * @return false The number is not a prime.
+\**/
+bool isPrime(long number);
+
+
+bool isPrimeAndOdd(long number);
 
 
 /**\
