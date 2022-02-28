@@ -19,6 +19,8 @@
 #include <vector>
 #include <assert.h>
 #include <numeric>
+#include <map>
+
 
 
 // ! Importing Necessary Bases (cin, cout, endl) To Avoid `using namespace std`.
@@ -36,6 +38,8 @@ using std::ostream;
 using std::size_t;
 using std::gcd;
 using std::lcm;
+using std::map;
+
 
 
 //.  ===============================================================================================
@@ -84,11 +88,6 @@ bool isInteger(double N);
 bool isPrime(long number);
 
 
-bool isPrimeAndOdd(long number);
-
-
-
-
 /**\
   * @brief Rounding a number to n decimal places.
   * 
@@ -109,9 +108,9 @@ double roundTom(double number, int n);
 double roundTo(double val, int n);
 
 
-//.  ===============================================================================================
-//.                                           FRACTION                                              
-//.  ===============================================================================================
+//.  ===========================================================================
+//.                                 FRACTION                                    
+//.  ===========================================================================
 class Fraction {
     int numerator;
     int denominator;
@@ -275,9 +274,10 @@ class Fraction {
         bool operator= (Fraction frac);
 };
 
-//.  ===============================================================================================
-//.                                           MATRICES                                              
-//.  ===============================================================================================
+
+//.  ===========================================================================
+//.                                 MATRICES                                    
+//.  ===========================================================================
 class Matrix {
     public:
         //.  ---------------------------------- CONSTRUCTORS ---------------------------------------
@@ -536,5 +536,64 @@ int getMaxVector(vector<int> liste);
   * @return double the min number of that vector.
 \**/
 int getMinVector(vector<int> liste);
+
+
+// /**\
+//   * @brief Allows to search all element type in a vector of the same type
+//   * 
+//   * @tparam Type type of the element and of the elements of the vector
+// \**/
+// template <typename Type>
+/**\
+  * @brief Verify if an element is in an array
+  * 
+  * @param vect vector in which to search
+  * @param elem element to look for
+  * @return true the element is in the vector
+  * @return false the element is not in the vector
+\**/
+bool isIn(vector<string> vect, const char * elem) ;
+
+
+
+int getOrder(map<string, vector<string>> dict);
+
+//.  ===========================================================================
+//.                                    MAP                                      
+//.  ===========================================================================
+void showMap(map<string, vector<string>> dic);
+
+vector<string> getKeys(map<string, vector<string>> dict);
+
+
+int getOrder(map<string, vector<string>> dict);
+
+
+
+//.  ===========================================================================
+//.                                   GRAPH                                     
+//.  ===========================================================================
+
+class Graph {
+    map<string, vector<string> > adjacentMap;
+    vector<string> vertices;
+
+    int order;
+    int size;
+
+    public:
+        Graph(map<string, vector<string>>);
+
+        int getSize() const;
+
+        bool isReflexive();
+        bool isTransitive();
+        bool isSymmetric();
+};
+
+
+
+
+
 
 #endif

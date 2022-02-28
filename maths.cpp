@@ -477,3 +477,64 @@ double getMinVector(vector<double> line) {
 
     return min;
 }
+
+
+bool isIn(vector<string> vect, const char * elem) {
+    return *find(vect.begin(), vect.end(), elem) == elem;
+}
+
+
+//.  ===========================================================================
+//.                                    MAP                                      
+//.  ===========================================================================
+void showMap(map<string, vector<string>> dic) {
+    for (const auto& [key, list] : dic) {
+        cout << '[' << key << "] =  {";
+        cout << " ";
+        for (const auto vertice: list) {
+            cout << vertice;
+            if (vertice != list.at(list.size() - 1)) {
+                cout << ", ";
+            }
+        }
+        cout << " }";
+        cout << ";" << endl;
+    }
+}
+
+int getOrder(map<string, vector<string>> dict) {
+    int cpt{};
+
+    for (auto const& couple: dict) {
+        for (auto elem: couple.second) {
+            cpt++;
+        }
+    }
+
+    return cpt;
+}
+
+vector<string> getKeys(map<string, vector<string>> dict) {
+    vector<string> keys;
+
+    for (auto const& couple: dict) {
+        keys.push_back(couple.first);
+    }
+
+    return keys;
+}
+
+
+//.  ===========================================================================
+//.                                   GRAPH                                     
+//.  ===========================================================================
+Graph::Graph(map<string, vector<string>> dict) {
+    adjacentMap = dict;
+    order = dict.size();
+    size = getOrder(dict);
+    vertices = getKeys(dict);
+}
+
+int Graph::getSize() const {
+    return size;
+}
