@@ -139,7 +139,7 @@ class Fraction {
          * @param x The numerator.
          * @param y The denominator.
         \**/
-        Fraction(const int x, const int y);
+        Fraction(const int &x, const int &y);
 
 
         /**\
@@ -281,7 +281,7 @@ class Fraction {
 class Matrix {
     public:
         //.  ---------------------------------- CONSTRUCTORS ---------------------------------------
-        Matrix(vector<vector<double>> matrix_);
+        Matrix(vector<vector<double>> &matrix_);
 
         /**\
          * @brief Construct a new Matrix object. In the case where the number of rows and columns is different.
@@ -289,7 +289,7 @@ class Matrix {
          * @param x Number of lines.
          * @param y Number of columns.
         \**/
-        Matrix(const int x, const int y);
+        Matrix(const int &x, const int &y);
 
 
         /**\
@@ -297,7 +297,7 @@ class Matrix {
          * 
          * @param i Number of lines AND colomns.
         \**/
-        Matrix(const int i);
+        Matrix(const int &i);
 
         /**\
           * @brief Construct a new Matrix object.

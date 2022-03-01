@@ -34,17 +34,15 @@ int& Fraction::getNumerator() { return numerator; }
 
 int& Fraction::getDenominator() { return denominator; }
 
-Fraction::Fraction(const int x, const int y) {
-    // ! Treatments
-    numerator = x;
-    denominator = y;
-}
+Fraction::Fraction(const int &x, const int &y):
+    numerator(x),
+    denominator(y)
+    {}
 
-Fraction::Fraction() {
-    // ! Treatments
-    numerator = 1;
-    denominator = 1;
-}
+Fraction::Fraction():
+    numerator(1),
+    denominator(1)
+    {}
 
 Fraction Fraction::operator+(const Fraction frac) {
     // ! Variables Declaration
@@ -189,21 +187,19 @@ bool Fraction::operator=(Fraction frac) {
 //.  ===========================================================================
 
 //.  ------------------------- MATRIX CONSTRUCTORS -----------------------------
-Matrix::Matrix(vector<vector<double>> matrix_) { matrix = matrix_; }
+Matrix::Matrix(vector<vector<double>> &matrix_):
+    matrix(matrix_)
+    {}
 
-Matrix::Matrix(const int x, const int y) {
-    // ! Treatments
-    m = x;
-    n = y;
-
+Matrix::Matrix(const int &x, const int &y):
+    m(x),
+    n(y) {
     initialize();
 }
 
-Matrix::Matrix(const int i) {
-    // ! Treatments
-    m = i;
-    n = i;
-
+Matrix::Matrix(const int &i):
+    m(i),
+    n(i) {
     initialize();
 }
 
@@ -528,12 +524,12 @@ vector<string> getKeys(map<string, vector<string>> dict) {
 //.  ===========================================================================
 //.                                   GRAPH                                     
 //.  ===========================================================================
-Graph::Graph(map<string, vector<string>> dict) {
-    adjacentMap = dict;
-    order = dict.size();
-    size = getOrder(dict);
-    vertices = getKeys(dict);
-}
+Graph::Graph(map<string, vector<string>> dict):
+    adjacentMap(dict),
+    order(dict.size()),
+    size(getOrder(dict)),
+    vertices(getKeys(dict))
+    {}
 
 int Graph::getSize() const {
     return size;
